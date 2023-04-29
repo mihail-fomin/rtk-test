@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 button {
-	@apply px-2 mt-3 mx-3 border-sky-700 border-2 rounded
+	@apply px-2 mt-3 mr-3 border-sky-700 border-2 rounded
 }
