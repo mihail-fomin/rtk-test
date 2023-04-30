@@ -2,6 +2,7 @@ import { addTodo, removeLastTodo } from "@/store/counterSlice";
 import { decrement, increment } from "@/store/counterSlice";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import TodoList from "./TodoList";
 
 const addAsyncTodo = () => {
 	return async dispatch => {
@@ -13,10 +14,14 @@ const addAsyncTodo = () => {
 
 
 export default function App() {
-	const [value, setValue] = useState('')
+	const [text, setText] = useState('')
 	const count = useSelector(state => state.toolkit.count)
-	const todos = useSelector(state => state.toolkit.todos)
 	const dispatch = useDispatch()
+
+	const addTask = () => {
+		dispatch(addTodo(text))
+		setText('')
+	}
 
 	return (
 		<div className="container mx-auto">
@@ -24,23 +29,18 @@ export default function App() {
 			<button onClick={() => dispatch(increment())}>Increment</button>
 			<button onClick={() => dispatch(decrement())}>Decrement</button>
 			<button onClick={() => dispatch(removeLastTodo())}>Remove last TODO</button>
-			<button onClick={() => dispatch(addTodo(value))}>Add TODO</button>
-			<button onClick={() => dispatch(addAsyncTodo(value))}>Add Async TODO</button>
+			<button onClick={() => addTask()}>Add TODO</button>
+			<button onClick={() => dispatch(addAsyncTodo(text))}>Add Async TODO</button>
 			<label>
+
 				<input
 					className="block px-2 mt-3 border-2 rounded border-sky-700"
 					type='text'
-					value={value}
-					onChange={(e) => setValue(e.target.value)}
+					value={text}
+					onChange={(e) => setText(e.target.value)}
 				/>
 			</label>
-			<ul className="mt-3">
-				{
-					todos.map(todo => (
-						<li key={todo}>{todo}</li>
-					))
-				}
-			</ul>
+			<TodoList />
 		</div>
 	)
 }
