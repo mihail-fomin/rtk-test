@@ -6,14 +6,14 @@ export default function TodoItem({ id, title, checked }) {
 
 	return (
 		<>
-			<li key={id} className='flex gap-2'>
+			<li key={id} className='flex items-center gap-2'>
 				<input
 					className=""
 					type='checkbox'
 					checked={checked}
 					onChange={() => dispatch(toggleTodoChecked({ id }))}
 				/>
-				{title}
+				{checked ? <s>{title}</s> : title}
 				<button
 					className="p-0 m-0 border-none"
 					onClick={() => dispatch(removeTodo({ id }))}
