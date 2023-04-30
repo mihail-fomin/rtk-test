@@ -4,14 +4,6 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TodoList from "./TodoList";
 
-const addAsyncTodo = () => {
-	return async dispatch => {
-		setTimeout(() => {
-			dispatch(addTodo('ASYNC TODO'))
-		}, 2000)
-	}
-}
-
 
 export default function App() {
 	const [text, setText] = useState('')
@@ -19,7 +11,7 @@ export default function App() {
 	const dispatch = useDispatch()
 
 	const addTask = () => {
-		dispatch(addTodo(text))
+		text.length && dispatch(addTodo({ text }))
 		setText('')
 	}
 
@@ -30,7 +22,6 @@ export default function App() {
 			<button onClick={() => dispatch(decrement())}>Decrement</button>
 			<button onClick={() => dispatch(removeLastTodo())}>Remove last TODO</button>
 			<button onClick={() => addTask()}>Add TODO</button>
-			<button onClick={() => dispatch(addAsyncTodo(text))}>Add Async TODO</button>
 			<label>
 
 				<input

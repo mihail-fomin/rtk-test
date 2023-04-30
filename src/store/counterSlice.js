@@ -20,8 +20,8 @@ const counterSlice = createSlice({
 		},
 		addTodo(state, action) {
 			state.todos.push({
-				id: new Date(),
-				title: action.payload,
+				id: new Date().toISOString(),
+				title: action.payload.text,
 				checked: false,
 			})
 		},
@@ -29,13 +29,14 @@ const counterSlice = createSlice({
 			state.todos.pop()
 		},
 		removeTodo(state, action) {
-			state.todos = state.todos.filter(todo => todo.id !== action.payload)
+			state.todos = state.todos.filter(todo => todo.id !== action.payload.id)
+		},
+		toggleTodoChecked(state, action) {
+			const toggledTodo = state.todos.find(todo => todo.id === action.payload.id);
+			toggledTodo.checked = !toggledTodo.checked
 		}
-		// toggleTodoChecked(state, action) {
-		// 	checked: action.target.checked,
-		// }
 	}
 })
 
 export default counterSlice.reducer
-export const { increment, decrement, addTodo, removeLastTodo, removeTodo } = counterSlice.actions
+export const { increment, decrement, addTodo, removeLastTodo, removeTodo, toggleTodoChecked } = counterSlice.actions
