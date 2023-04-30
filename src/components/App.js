@@ -3,6 +3,15 @@ import { decrement, increment } from "@/store/counterSlice";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+const addAsyncTodo = () => {
+	return async dispatch => {
+		setTimeout(() => {
+			dispatch(addTodo('ASYNC TODO'))
+		}, 2000)
+	}
+}
+
+
 export default function App() {
 	const [value, setValue] = useState('')
 	const count = useSelector(state => state.toolkit.count)
@@ -16,6 +25,7 @@ export default function App() {
 			<button onClick={() => dispatch(decrement())}>Decrement</button>
 			<button onClick={() => dispatch(removeLastTodo())}>Remove last TODO</button>
 			<button onClick={() => dispatch(addTodo(value))}>Add TODO</button>
+			<button onClick={() => dispatch(addAsyncTodo(value))}>Add Async TODO</button>
 			<label>
 				<input
 					className="block px-2 mt-3 border-2 rounded border-sky-700"
