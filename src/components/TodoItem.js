@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux"
 import { removeTodo, toggleTodoChecked } from "../store/counterSlice"
 
-export default function TodoItem({ id, title, checked }) {
+export default function TodoItem({ id, title, completed }) {
 	const dispatch = useDispatch()
 
 	return (
@@ -10,10 +10,21 @@ export default function TodoItem({ id, title, checked }) {
 				<input
 					className=""
 					type='checkbox'
-					checked={checked}
+					checked={completed}
 					onChange={() => dispatch(toggleTodoChecked({ id }))}
 				/>
-				{checked ? <s>{title}</s> : title}
+				{completed ?
+					<button className="p-0 m-0 border-none"
+						onClick={() => dispatch(toggleTodoChecked({ id }))}
+					>
+						<s>{title}</s>
+					</button> :
+					<button className="p-0 m-0 border-none"
+						onClick={() => dispatch(toggleTodoChecked({ id }))}
+					>
+						{title}
+					</button>
+				}
 				<button
 					className="p-0 m-0 border-none"
 					onClick={() => dispatch(removeTodo({ id }))}

@@ -3,7 +3,7 @@ import TodoItem from "./TodoItem"
 
 
 export default function TodoList() {
-	const todos = useSelector(state => state.toolkit.todos)
+	const todos = useSelector(state => state.todos.todos)
 
 
 	return (
@@ -19,6 +19,5 @@ export default function TodoList() {
 				}
 			</ul>
 		</>
-
 	)
 }

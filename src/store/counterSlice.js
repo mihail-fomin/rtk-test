@@ -1,15 +1,28 @@
-const { createSlice } = require("@reduxjs/toolkit");
+const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
 
+export const fetchTodos = createAsyncThunk(
+	'todos/fetchTodos',
+	async function () {
+		const response = await fetch('https://jsonplaceholder.typicode.com/todos?_limit=10')
+		console.log('response: ', response);
+
+		const data = await response.json()
+
+		return data
+	}
+)
 
 const counterSlice = createSlice({
-	name: 'counter',
+	name: 'todos',
 	initialState: {
 		count: 0,
 		todos: [
-			{ id: 1, title: 'Visit Venice', checked: true },
-			{ id: 2, title: 'Visit Rome', checked: false },
-			{ id: 3, title: 'Visit Florencia', checked: false }
-		]
+			// { id: 1, title: 'Visit Venice', completed: true },
+			// { id: 2, title: 'Visit Rome', completed: false },
+			// { id: 3, title: 'Visit Florencia', completed: false }
+		],
+		status: null,
+		error: null,
 	},
 	reducers: {
 		increment(state) {
@@ -22,7 +35,7 @@ const counterSlice = createSlice({
 			state.todos.push({
 				id: new Date().toISOString(),
 				title: action.payload.text,
-				checked: false,
+				completed: false,
 			})
 		},
 		removeLastTodo(state) {
@@ -33,8 +46,21 @@ const counterSlice = createSlice({
 		},
 		toggleTodoChecked(state, action) {
 			const toggledTodo = state.todos.find(todo => todo.id === action.payload.id);
-			toggledTodo.checked = !toggledTodo.checked
+			toggledTodo.completed = !toggledTodo.completed
 		}
+	},
+	extraReducers: {
+		[fetchTodos.pending]: (state) => {
+			state.status = 'loading'
+			state.error = null
+		},
+		[fetchTodos.fulfilled]: (state, action) => {
+			state.status = 'resolved'
+			state.todos = action.payload
+		},
+		[fetchTodos.rejected]: (state, action) => {
+
+		},
 	}
 })
 

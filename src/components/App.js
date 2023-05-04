@@ -1,19 +1,23 @@
-import { addTodo, removeLastTodo } from "@/store/counterSlice";
+import { addTodo, removeLastTodo, fetchTodos } from "@/store/counterSlice";
 import { decrement, increment } from "@/store/counterSlice";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TodoList from "./TodoList";
 
 
 export default function App() {
 	const [text, setText] = useState('')
-	const count = useSelector(state => state.toolkit.count)
+	const count = useSelector(state => state.todos.count)
 	const dispatch = useDispatch()
 
 	const addTask = () => {
 		text.length && dispatch(addTodo({ text }))
 		setText('')
 	}
+
+	useEffect(() => {
+		dispatch(fetchTodos())
+	}, [dispatch])
 
 	return (
 		<div className="container mx-auto">

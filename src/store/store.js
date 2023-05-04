@@ -2,7 +2,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import counterSlice from "./counterSlice";
 
 const rootReducer = combineReducers({
-	toolkit: counterSlice
+	todos: counterSlice
 })
 
 export const store = configureStore({
