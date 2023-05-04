@@ -8,6 +8,7 @@ import TodoList from "./TodoList";
 export default function App() {
 	const [text, setText] = useState('')
 	const count = useSelector(state => state.todos.count)
+	const { status, error } = useSelector(state => state.todos)
 	const dispatch = useDispatch()
 
 	const addTask = () => {
@@ -35,6 +36,10 @@ export default function App() {
 					onChange={(e) => setText(e.target.value)}
 				/>
 			</label>
+
+			{status === 'loading' && <h2>Loading...</h2>}
+			{error && <h2>An error occured: {error}</h2>}
+
 			<TodoList />
 		</div>
 	)
