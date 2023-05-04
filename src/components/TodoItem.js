@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux"
-import { removeTodo, toggleTodoChecked } from "../store/counterSlice"
+import { deleteTodo, toggleStatus } from "../store/counterSlice"
 
 export default function TodoItem({ id, title, completed }) {
 	const dispatch = useDispatch()
@@ -11,23 +11,23 @@ export default function TodoItem({ id, title, completed }) {
 					className=""
 					type='checkbox'
 					checked={completed}
-					onChange={() => dispatch(toggleTodoChecked({ id }))}
+					onChange={() => dispatch(toggleStatus(id))}
 				/>
 				{completed ?
 					<button className="p-0 m-0 border-none"
-						onClick={() => dispatch(toggleTodoChecked({ id }))}
+						onClick={() => dispatch(toggleStatus(id))}
 					>
 						<s>{title}</s>
 					</button> :
 					<button className="p-0 m-0 border-none"
-						onClick={() => dispatch(toggleTodoChecked({ id }))}
+						onClick={() => dispatch(toggleStatus(id))}
 					>
 						{title}
 					</button>
 				}
 				<button
 					className="p-0 m-0 border-none"
-					onClick={() => dispatch(removeTodo({ id }))}
+					onClick={() => dispatch(deleteTodo(id))}
 				>
 					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
 						<path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />

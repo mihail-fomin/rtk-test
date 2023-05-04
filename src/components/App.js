@@ -1,4 +1,4 @@
-import { addTodo, removeLastTodo, fetchTodos } from "@/store/counterSlice";
+import { addTodo, removeLastTodo, fetchTodos, addNewTodo } from "@/store/counterSlice";
 import { decrement, increment } from "@/store/counterSlice";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,7 +12,7 @@ export default function App() {
 	const dispatch = useDispatch()
 
 	const addTask = () => {
-		text.length && dispatch(addTodo({ text }))
+		text.length && dispatch(addNewTodo(text))
 		setText('')
 	}
 
